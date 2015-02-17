@@ -1,18 +1,18 @@
 'use strict';
 
 var test = require('tape'),
-    swaggerizeExpress = require('../lib'),
-    swaggerize = swaggerizeExpress.swaggerize,
+    swaggerize = require('../lib'),
+    swaggerizeApp = swaggerize.app,
     express = require('express'),
     bodyParser = require('body-parser'),
     request = require('supertest'),
     path = require('path');
 
-test('swaggerize', function (t) {
+test('swaggerizeApp', function (t) {
 
     var app = express();
 
-    var swagger = swaggerize({
+    var swagger = swaggerizeApp({
         api: require('./fixtures/defs/pets.json'),
         handlers: path.join(__dirname, 'fixtures/handlers')
     });
@@ -38,7 +38,7 @@ test('swaggerize', function (t) {
         t.plan(1);
 
         t.doesNotThrow(function () {
-            swaggerize({
+            swaggerizeApp({
                 api: path.join(__dirname, './fixtures/defs/pets.json'),
                 handlers: path.join(__dirname, 'fixtures/handlers')
             });
@@ -102,7 +102,7 @@ test('input validation', function (t) {
 
     app.use(bodyParser.json());
 
-    app.use(swaggerize({
+    app.use(swaggerizeApp({
         api: require('./fixtures/defs/pets.json'),
         handlers: {
             'pets': {
