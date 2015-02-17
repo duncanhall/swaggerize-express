@@ -19,20 +19,6 @@ test('swaggerize', function (t) {
     app.use(bodyParser.json());
     app.use(swagger);
 
-    t.test('api', function (t) {
-        t.plan(5);
-
-        t.ok(app.hasOwnProperty('api'), 'has api property.');
-        t.ok(app.api, 'api is an object.');
-
-        t.ok(app.hasOwnProperty('setHost'), 'has setHost property.');
-        t.strictEqual(typeof app.setHost, 'function', 'setHost is a function.');
-
-        app.setHost('localhost:8080');
-
-        t.strictEqual(app.api.host, 'localhost:8080');
-    });
-
     t.test('docs', function (t) {
         t.plan(2);
 
