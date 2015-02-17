@@ -1,16 +1,16 @@
 'use strict';
 
 var test = require('tape'),
-    swaggerizeOptions = require('../lib/swaggerizeOptions'),
+    optionsBuilder = require('../lib/optionsBuilder'),
     path = require('path');
 
-test('swaggerizeOptions', function (t) {
+test('optionsBuilder swaggerizeOptions', function (t) {
 
     t.test('api as json path', function (t) {
         t.plan(1);
 
         t.doesNotThrow(function () {
-            swaggerizeOptions({
+            optionsBuilder.swaggerizeOptions({
                 api: path.join(__dirname, './fixtures/defs/pets.json'),
                 handlers: path.join(__dirname, 'fixtures/handlers')
             });
@@ -21,7 +21,7 @@ test('swaggerizeOptions', function (t) {
         t.plan(1);
 
         t.doesNotThrow(function () {
-            swaggerizeOptions({
+            optionsBuilder.swaggerizeOptions({
                 api: require('./fixtures/defs/pets.json'),
                 handlers: path.join(__dirname, 'fixtures/handlers')
             });
