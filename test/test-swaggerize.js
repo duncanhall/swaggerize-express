@@ -2,17 +2,16 @@
 
 var test = require('tape'),
     swaggerize = require('../lib'),
-    swaggerizeApp = swaggerize.app,
     express = require('express'),
     bodyParser = require('body-parser'),
     request = require('supertest'),
     path = require('path');
 
-test('swaggerizeApp', function (t) {
+test('swaggerize', function (t) {
 
     var app = express();
 
-    var swagger = swaggerizeApp({
+    var swagger = swaggerize({
         api: require('./fixtures/defs/pets.json'),
         handlers: path.join(__dirname, 'fixtures/handlers')
     });
@@ -38,7 +37,7 @@ test('swaggerizeApp', function (t) {
         t.plan(1);
 
         t.doesNotThrow(function () {
-            swaggerizeApp({
+            swaggerize({
                 api: path.join(__dirname, './fixtures/defs/pets.json'),
                 handlers: path.join(__dirname, 'fixtures/handlers')
             });
@@ -102,7 +101,7 @@ test('input validation', function (t) {
 
     app.use(bodyParser.json());
 
-    app.use(swaggerizeApp({
+    app.use(swaggerize({
         api: require('./fixtures/defs/pets.json'),
         handlers: {
             'pets': {
@@ -144,31 +143,6 @@ test('input validation', function (t) {
         request(app).post('/v1/petstore/pets').send('').end(function (error, response) {
             t.ok(!error, 'no error.');
             t.strictEqual(response.statusCode, 400, '400 status.');
-        });
-    });
-
-});
-
-test('yaml support', function (t) {
-    var app = express();
-
-    t.test('api as yaml', function (t) {
-        t.plan(1);
-
-        t.doesNotThrow(function () {
-            app.use(swaggerizeApp({
-                api: path.join(__dirname, './fixtures/defs/pets.yaml'),
-                handlers: path.join(__dirname, 'fixtures/handlers')
-            }));
-        });
-    });
-
-    t.test('get /pets', function (t) {
-        t.plan(2);
-
-        request(app).get('/v1/petstore/pets').end(function (error, response) {
-            t.ok(!error, 'no error.');
-            t.strictEqual(response.statusCode, 200, '200 status.');
         });
     });
 
