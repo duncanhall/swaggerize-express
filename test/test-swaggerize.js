@@ -1,7 +1,8 @@
 'use strict';
 
 var test = require('tape'),
-    swaggerize = require('../lib'),
+    swaggerizeExpress = require('../lib'),
+    swaggerize = swaggerizeExpress.swaggerize,
     express = require('express'),
     bodyParser = require('body-parser'),
     request = require('supertest'),
